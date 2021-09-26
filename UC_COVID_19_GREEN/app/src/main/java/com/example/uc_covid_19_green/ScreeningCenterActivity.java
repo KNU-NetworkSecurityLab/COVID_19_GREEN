@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 
 import net.daum.mf.map.api.MapView;
 
@@ -16,7 +17,7 @@ public class ScreeningCenterActivity extends AppCompatActivity {
 
         MapView mapView = new MapView(this);
 
-        ConstraintLayout mapviewContainer = findViewById(R.id.map_view);
+        RelativeLayout mapviewContainer = (RelativeLayout) findViewById(R.id.map_view);
         mapviewContainer.addView(mapView);
     }
 }
