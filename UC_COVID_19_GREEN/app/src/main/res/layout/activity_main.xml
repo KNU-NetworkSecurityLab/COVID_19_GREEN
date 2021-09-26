@@ -111,7 +111,7 @@
         app:layout_constraintVertical_bias="0.8" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_screening"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_rounding_blue"

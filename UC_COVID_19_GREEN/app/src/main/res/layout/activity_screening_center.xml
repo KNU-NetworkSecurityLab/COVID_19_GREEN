@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_weight="10"
+    android:orientation="vertical"
     tools:context=".ScreeningCenterActivity">
 
     <TextView
@@ -13,17 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="30dp"
         android:background="@color/uc_blue"
-        android:text="근처 선별진료소 확인" />
+        android:gravity="center"
+        android:text="근처 선별진료소 확인"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map_screen"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
-        />
+        android:layout_weight="9"></androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>
