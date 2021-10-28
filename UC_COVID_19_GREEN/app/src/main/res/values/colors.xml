@@ -10,4 +10,5 @@
 
     <color name="uc_green">#5FE449</color>
     <color name="uc_blue">#6473FF</color>
+    <color name="uc_gray">#50000000</color>
 </resources>
