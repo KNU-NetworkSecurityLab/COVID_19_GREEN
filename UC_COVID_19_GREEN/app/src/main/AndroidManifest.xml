@@ -22,7 +22,7 @@
             android:name=".SocialDistanceActivity"
             android:exported="true" />
         <activity
-            android:name=".ScreeningCenterActivity"
+            android:name=".QRScanActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
