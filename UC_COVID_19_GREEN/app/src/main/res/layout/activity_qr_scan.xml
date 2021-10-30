@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_weight="10"
     android:orientation="vertical"
-    tools:context=".ScreeningCenterActivity">
+    tools:context=".QRScanActivity">
 
     <TextView
         android:id="@+id/textView6"

@@ -9,6 +9,7 @@
     android:paddingLeft="30dp"
     android:paddingTop="20dp"
     android:weightSum="100"
+    android:background="@color/white"
     tools:context=".SocialDistanceActivity">
 
     <TextView
@@ -71,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="충남 천안시"
+            android:text="(위치 탐색중)"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/textView11"
             app:layout_constraintStart_toEndOf="@+id/view4"
@@ -107,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:text="3"
+            android:text="-"
             android:textColor="@color/uc_green"
             android:textStyle="bold"
             android:textSize="60sp"
@@ -137,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="4인 이상 집합 금지" />
+                android:text="불러오는 중..." />
         </LinearLayout>
     </ScrollView>
 
@@ -150,5 +151,5 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="출저 : 천안시청 홈페이지" />
+        android:text="출저 : 코로나바이러스감염증-19" />
 </LinearLayout>
