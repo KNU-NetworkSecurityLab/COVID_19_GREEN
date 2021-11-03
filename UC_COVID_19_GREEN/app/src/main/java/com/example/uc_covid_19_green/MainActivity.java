@@ -28,13 +28,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -50,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_nationwide;
     LocationManager locationManager;
     String db_name[];
+    String db_details[];
     int db_distance[][];
     String strLocation = null;
     int idx = -1;
@@ -58,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+
+
         tv_location = findViewById(R.id.tv_location);
         tv_main_distance = findViewById(R.id.tv_main_distance);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ScreeningCenterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), QRScanActivity.class);
                 startActivity(intent);
             }
         });
@@ -77,15 +79,18 @@ public class MainActivity extends AppCompatActivity {
         btn_policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(idx == -1) {
-                    Toast.makeText(getApplicationContext(),"위치 탐색중입니다",Toast.LENGTH_SHORT).show();
+                if (idx == -1) {
+                    Toast.makeText(getApplicationContext(), "위치 탐색중입니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent intent = new Intent(getApplicationContext(), SocialDistanceActivity.class);
-                intent.putExtra("CityName",db_name[idx]);
-                intent.putExtra("CityDistance",db_distance[idx][0]);
-                intent.putExtra("CityMeet",db_distance[idx][1]);
-                intent.putExtra("CityMeetp",db_distance[idx][2]);
+                intent.putExtra("root", "Main");
+                intent.putExtra("Address", strLocation);
+                intent.putExtra("CityName", db_name[idx]);
+                intent.putExtra("CityDistance", db_distance[idx][0]);
+                intent.putExtra("CityMeet", db_distance[idx][1]);
+                intent.putExtra("CityMeetp", db_distance[idx][2]);
+                intent.putExtra("CityDetails", db_details[idx]);
                 startActivity(intent);
             }
         });
@@ -99,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         onLocate();
-        getHashKey();
 
         GetList gl = new GetList();
+
         String tempstr = "";
         try {
             tempstr = gl.execute().get();
@@ -113,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("temp", tempstr);
 
-
         try {
 //                Log.d("dt","1");
 //                JSONArray jsonArray = new JSONArray(str);
@@ -123,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
             JSONArray jsonArray = Jasonobject.getJSONArray("response");
 
             db_name = new String[jsonArray.length()];
-            db_distance = new int[jsonArray.length()][3];
+            db_distance = new int[jsonArray.length()][4];
+            db_details = new String[jsonArray.length()];
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -132,18 +137,17 @@ public class MainActivity extends AppCompatActivity {
                 db_distance[i][0] = jsonObject.getInt("CityDistance");
                 db_distance[i][1] = jsonObject.getInt("CityMeet");
                 db_distance[i][2] = jsonObject.getInt("CityMeetp");
+                db_details[i] = jsonObject.getString("CityDetails");
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         for (int i = 0; i < db_name.length; i++) {
-            Log.d("db", db_name[i] + " " + db_distance[i][0] + " " + db_distance[i][1] + " " + db_distance[i][2]);
+            Log.d("db_dev1", db_name[i] + " " + db_distance[i][0] + " " + db_distance[i][1] + " " + db_distance[i][2] + " " + db_distance[i][3] + " " + db_details[i]);
         }
 
     }
-
 
     class GetList extends AsyncTask<String, Void, String> {
         String str = "";
@@ -170,8 +174,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ;
-
             return str;
         }
 
@@ -204,8 +206,6 @@ public class MainActivity extends AppCompatActivity {
                 double latitude = location.getLatitude(); //경도
                 double altitude = location.getAltitude(); //고도
 
-                Log.d("Location", longitude + " " + latitude);
-
                 Geocoder g = new Geocoder(getApplicationContext());
                 List<Address> address = null;
                 try {
@@ -232,12 +232,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("lo", splitedLocation[i]);
 
         for (int i = 0; i < db_name.length; i++) {
-            if(db_name[i].equals(splitedLocation[1])) {
+            if (db_name[i].equals(splitedLocation[1])) {
                 idx = i;
             }
         }
-        Log.d("find",db_name[idx] + " " + db_distance[idx][0] + " " + db_distance[idx][1] + " " + db_distance[idx][2]);
-        tv_main_distance.setText(db_distance[idx][0]+"");
+        Log.d("find", db_name[idx] + " " + db_distance[idx][0] + " " + db_distance[idx][1] + " " + db_distance[idx][2]);
+        tv_main_distance.setText(db_distance[idx][0] + "");
     }
 
 

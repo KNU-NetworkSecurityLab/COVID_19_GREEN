@@ -2,35 +2,106 @@ package com.example.uc_covid_19_green;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class NationwideActivity extends AppCompatActivity {
-    WebView wv_nation;
-    private WebSettings mWebSettings;
+    TextView tv_table;
+    String db_name[];
+    String strResult = "";
+    int db_distance[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nationwide);
+        tv_table = findViewById(R.id.tv_table);
 
-       // wv_nation = findViewById(R.id.wv_nation);
 
-//        wv_nation.setWebViewClient(new WebViewClient()); // 클릭시 새창 안뜨게
-//        mWebSettings = wv_nation.getSettings(); //세부 세팅 등록
-//        mWebSettings.setJavaScriptEnabled(true); // 웹페이지 자바스클비트 허용 여부
-//        mWebSettings.setSupportMultipleWindows(false); // 새창 띄우기 허용 여부
-//        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(false); // 자바스크립트 새창 띄우기(멀티뷰) 허용 여부
-//        mWebSettings.setLoadWithOverviewMode(true); // 메타태그 허용 여부
-//        mWebSettings.setUseWideViewPort(true); // 화면 사이즈 맞추기 허용 여부
-//        mWebSettings.setSupportZoom(false); // 화면 줌 허용 여부
-//        mWebSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
-//        mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
-//        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 브라우저 캐시 허용 여부
-//        mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
-//
-//        wv_nation.loadUrl("http://ncov.mohw.go.kr/"); // 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
+        GetList gl = new GetList();
+
+
+        String str = null;
+        try {
+            str = gl.execute().get();
+
+            JSONObject Jasonobject = new JSONObject(str);
+            JSONArray jsonArray = Jasonobject.getJSONArray("response");
+
+            db_name = new String[jsonArray.length()];
+            db_distance = new int[jsonArray.length()];
+
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Log.d("json123", jsonObject.getInt("CityMeetp") + "");
+                db_name[i] = jsonObject.getString("CityName");
+                db_distance[i] = jsonObject.getInt("CityDistance");
+
+                strResult = strResult + db_name[i] + " | " + db_distance[i] + "\n";
+            }
+        } catch (Exception e) {
+        }
+
+
+        tv_table.setText(strResult);
     }
+
+
+    class GetList extends AsyncTask<String, Void, String> {
+        String str = "";
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                URL url = Utils.getListURL();
+                URLConnection con = url.openConnection();
+
+                BufferedReader rd = null;
+                rd = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+
+                String line = "";
+
+                str = rd.readLine();
+                while ((line = rd.readLine()) != null) {
+                    str = line;
+                    //주의 : str = str + line 으로 받을 경우 앞의 쓰레기값까지 싹 다 받음
+                    //어차피 return 되는 jsonarray는 한줄로 싹다 출력되기에 마지막줄만 받으면 됨
+                }
+                //서버에서 return 해준 jsonarray값이 str에 저장됨
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            return str;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+        }
+    }
+
 }

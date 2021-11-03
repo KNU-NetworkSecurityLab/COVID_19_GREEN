@@ -1,24 +1,20 @@
 package com.example.uc_covid_19_green;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import net.daum.mf.map.api.MapView;
-
-public class ScreeningCenterActivity extends AppCompatActivity {
+public class QRScanActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_screening_center);
+        setContentView(R.layout.activity_qr_scan);
 
         new IntentIntegrator(this).initiateScan();
     }
@@ -36,6 +32,7 @@ public class ScreeningCenterActivity extends AppCompatActivity {
                 intent.putExtra("address", result.getContents());
                 intent.putExtra("root","QR");
                 startActivity(intent);
+                finish();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
