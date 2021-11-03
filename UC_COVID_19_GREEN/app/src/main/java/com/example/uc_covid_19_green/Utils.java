@@ -15,6 +15,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class Utils {
     LocationManager locationManager;
@@ -56,7 +61,7 @@ public class Utils {
                 Geocoder g = new Geocoder(context);
                 List<Address> address = null;
                 try {
-                    address = g.getFromLocation(latitude,longitude,10);
+                    address = g.getFromLocation(latitude, longitude, 10);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -99,7 +104,7 @@ public class Utils {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ;
+
 
             return str;
         }
@@ -115,5 +120,50 @@ public class Utils {
             super.onPostExecute(result);
 
         }
+    }
+
+    public String[] matchInform(String location) {
+        GetList gl = new GetList();
+        String str = "";
+        try {
+            str = gl.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        String cityDB[][] = null;
+
+        try {
+//                Log.d("dt","1");
+//                JSONArray jsonArray = new JSONArray(str);
+//                Log.d("dt","2");
+
+            JSONObject Jasonobject = new JSONObject(str);
+            JSONArray jsonArray = Jasonobject.getJSONArray("response");
+
+            cityDB = new String[jsonArray.length()][5];
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                cityDB[i][0] = jsonObject.getString("CityName");
+                cityDB[i][1] = String.valueOf(jsonObject.getInt("CityDistance"));
+                cityDB[i][2] = String.valueOf(jsonObject.getInt("CityMeet"));
+                cityDB[i][3] = String.valueOf(jsonObject.getInt("CityMeetp"));
+                cityDB[i][4] = jsonObject.getString("CityDetails");
+                Log.d("devtag",cityDB[i][4]);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < cityDB.length; i++) {
+            if(cityDB[i][0].equals(location)) {
+                return cityDB[i];
+            }
+        }
+
+        return null;
     }
 }
