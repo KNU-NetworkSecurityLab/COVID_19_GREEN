@@ -67,8 +67,6 @@ public class Utils {
                 }
 
                 strAddress[0] = address.get(0).getAddressLine(0);
-
-
             }
         };
 

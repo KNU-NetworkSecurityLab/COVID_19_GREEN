@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     tools:context=".MainActivity">
 
     <ImageView
@@ -27,16 +27,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/tv_refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="위치 재설정"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
@@ -111,18 +101,39 @@
         app:layout_constraintTop_toTopOf="@+id/tv_main_distance"
         app:layout_constraintVertical_bias="0.8" />
 
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <View
+        android:id="@+id/vie"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+    <View
+        android:id="@+id/vie2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/view5"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
     <Button
         android:id="@+id/btn_scan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_rounding_blue"
         android:text="QR 코드 스캔"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/vie"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/view5"
         app:layout_constraintWidth_percent="0.8" />
 
     <Button
@@ -131,13 +142,13 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_rounding_blue"
         android:text="방역지침 보기"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_scan"
+        app:layout_constraintBottom_toTopOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/vie2"
         app:layout_constraintWidth_percent="0.8" />
 
     <Button
@@ -146,12 +157,12 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_rounding_blue"
         android:text="전국 거리두기 단계 확인"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_scan"
+        app:layout_constraintTop_toBottomOf="@+id/vie"
         app:layout_constraintWidth_percent="0.8" />
 
     <TextView
@@ -163,5 +174,20 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/btn_refresh"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_rounding_blue"
+        android:text="위치 재설정"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/vie2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintWidth_percent="0.8" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,7 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     TextView tv_location;
-    TextView tv_refresh;
+    Button btn_refresh;
     TextView tv_main_distance;
     Button btn_scan;
     Button btn_policy;
@@ -59,14 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
 
-
+        btn_refresh = findViewById(R.id.btn_refresh);
         tv_location = findViewById(R.id.tv_location);
         tv_main_distance = findViewById(R.id.tv_main_distance);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         btn_scan = findViewById(R.id.btn_scan);
-        tv_refresh = findViewById(R.id.tv_refresh);
         btn_policy = findViewById(R.id.btn_policy);
         btn_nationwide = findViewById(R.id.btn_nationwide);
+
+
 
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NationwideActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("dev2","devee");
+                onLocate();
             }
         });
 
@@ -196,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "권한 필요", Toast.LENGTH_LONG).show();
             return;
         }
+        Log.d("dev1","tv_click");
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         LocationListener locationListener = new LocationListener() {
@@ -221,8 +231,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 1, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 1, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
     }
 
     public void onLocationFind(String strLocation) {

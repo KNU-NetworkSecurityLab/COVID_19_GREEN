@@ -9,7 +9,7 @@
     android:paddingLeft="30dp"
     android:paddingTop="20dp"
     android:weightSum="100"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     tools:context=".SocialDistanceActivity">
 
     <TextView
@@ -109,7 +109,7 @@
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
             android:text="-"
-            android:textColor="@color/uc_green"
+            android:textColor="#098B94"
             android:textStyle="bold"
             android:textSize="60sp"
             app:layout_constraintBottom_toBottomOf="parent"
