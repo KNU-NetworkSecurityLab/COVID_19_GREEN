@@ -139,6 +139,20 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:text="불러오는 중..." />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/uc_gray"/>
+
+            <TextView
+                android:id="@+id/tv_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/black"
+                android:text="" />
         </LinearLayout>
     </ScrollView>
 
