@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.uc_covid_19_green"
         minSdk 21
-        targetSdk 31
+        targetSdk 27
         versionCode 1
         versionName "1.0"
 
@@ -32,6 +32,15 @@ android {
 }
 
 dependencies {
+
+    //Kakao map API
+    implementation files('libs/libDaumMapAndroid.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //QR Code Scan
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+
 
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
